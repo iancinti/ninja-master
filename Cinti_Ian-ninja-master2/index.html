@@ -1,0 +1,45 @@
+<html>
+<body>
+	<div id='background' style="background-image: url(img/black_bg.jpg); background-repeat: no-repeat; width: 600px; height: 600px; background-size: cover;">
+		<div id='character'
+			 style='position:absolute; top:100px; left:450px; background-image: url("img/down1.png"); width:59px; height:86px; filter: drop-shadow(0 0 10px white);'>
+		</div>
+	</div>
+	<script type="text/javascript">
+		var leftValue = 450; // Valor inicial de la posición horizontal del personaje
+		var topValue = 100; // Valor inicial de la posición vertical del personaje
+		var direction = 'down1'; // Dirección inicial del personaje
+		var step = 1; // Variable para alternar entre los pasos de animación
+
+		function update() {
+			// Alternar entre los pasos de animación (1 y 2)
+			step = (step === 1) ? 2 : 1;
+
+			// Actualizar la posición del personaje en el elemento "character"
+			document.getElementById("character").style.left = leftValue + "px";
+			document.getElementById("character").style.top = topValue + "px";
+
+			// Asignar la imagen correspondiente a la dirección y paso de animación actual
+			document.getElementById("character").style.backgroundImage = `url("img/${direction+step}.png")`;
+		}
+
+		document.onkeydown = function (e) {
+			console.log(e);
+			if (e.keyCode == 37) { // Tecla IZQUIERDA
+				leftValue = Math.max(leftValue - 10, 0); // Mover hacia la izquierda, sin superar la coordenada X 0
+				direction = 'left'; // Cambiar la dirección del personaje a la izquierda
+			} else if (e.keyCode == 39) { // Tecla DERECHA
+				leftValue = Math.min(leftValue + 10, 500); // Mover hacia la derecha, sin superar la coordenada X 500
+				direction = 'right'; // Cambiar la dirección del personaje a la derecha
+			} else if (e.keyCode == 40) { // Tecla ABAJO
+				topValue = Math.min(topValue + 10, 500); // Mover hacia abajo, sin superar la coordenada Y 500
+				direction = 'down'; // Cambiar la dirección del personaje hacia abajo
+			} else if (e.keyCode == 38) { // Tecla ARRIBA
+				topValue = Math.max(topValue - 10, 0); // Mover hacia arriba, sin superar la coordenada Y 0
+				direction = 'top'; // Cambiar la dirección del personaje hacia arriba
+			}
+			update(); // Actualizar la posición y la animación del personaje
+		}
+	</script>
+</body>
+</html>
